@@ -1,6 +1,6 @@
 ANGGOTA KELOMPOK :
 1. Komang Yoga Suputra - 103052330046
-2. Agnes Valerie - 10305230
+2. Agnes Valerie - 103052300040
 
 Deskripsi Program 
 
