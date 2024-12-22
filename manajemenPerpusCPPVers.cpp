@@ -1,7 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -13,21 +11,23 @@ struct Book {
 };
 
 // Deklarasi array global dengan kapasitas maksimum 100 buku
-vector<Book> catalog;
+const int MAX_BOOKS = 100;
+Book catalog[MAX_BOOKS];
+int bookCount = 0; // Menyimpan jumlah buku saat ini
 
 // Fungsi untuk menambahkan buku ke katalog
 void addBook(const Book& book) {
-    if (catalog.size() >= 100) {
+    if (bookCount >= MAX_BOOKS) {
         cout << "Katalog penuh! Tidak dapat menambahkan buku baru." << endl;
         return;
     }
-    catalog.push_back(book);
+    catalog[bookCount++] = book; // Menambahkan buku dan meningkatkan jumlah buku
 }
 
 // Fungsi Bubble Sort Iteratif untuk mengurutkan katalog berdasarkan ID
 void bubbleSortIterative() {
-    for (size_t i = 0; i < catalog.size() - 1; ++i) {
-        for (size_t j = 0; j < catalog.size() - i - 1; ++j) {
+    for (int i = 0; i < bookCount - 1; ++i) {
+        for (int j = 0; j < bookCount - i - 1; ++j) {
             if (catalog[j].ID > catalog[j + 1].ID) {
                 // Menukar elemen secara manual
                 Book temp = catalog[j];
@@ -56,7 +56,7 @@ void bubbleSortRecursive(int n) {
 
 // Fungsi Linear Search Iteratif untuk mencari buku berdasarkan ID
 int linearSearchIterative(int targetID) {
-    for (size_t i = 0; i < catalog.size(); ++i) {
+    for (int i = 0; i < bookCount; ++i) {
         if (catalog[i].ID == targetID) {
             return i;
         }
@@ -66,7 +66,7 @@ int linearSearchIterative(int targetID) {
 
 // Fungsi Linear Search Rekursif untuk mencari buku berdasarkan ID
 int linearSearchRecursive(int targetID, int index) {
-    if (index >= catalog.size()) {
+    if (index >= bookCount) {
         return -1;
     }
     if (catalog[index].ID == targetID) {
@@ -93,7 +93,7 @@ int binarySearchRecursive(int targetID, int low, int high) {
 // Fungsi iteratif Binary Search untuk mencari buku berdasarkan ID
 int binarySearchIterative(int targetID) {
     int low = 0;
-    int high = catalog.size() - 1;
+    int high = bookCount - 1;
     while (low <= high) {
         int mid = low + (high - low) / 2;
         if (catalog[mid].ID == targetID) {
@@ -113,31 +113,35 @@ bool removeBook(int targetID) {
     if (index == -1) {
         return false;
     }
-    catalog.erase(catalog.begin() + index);
+    // Menggeser buku setelah yang dihapus
+    for (int i = index; i < bookCount - 1; ++i) {
+        catalog[i] = catalog[i + 1];
+    }
+    bookCount--; // Mengurangi jumlah buku
     return true;
 }
 
 // Fungsi untuk menampilkan katalog buku
 void displayCatalog() {
-    if (catalog.empty()) {
+    if (bookCount == 0) {
         cout << "Katalog kosong." << endl;
         return;
     }
     cout << "Katalog Buku:" << endl;
-    for (const auto& book : catalog) {
-        cout << "ID: " << book.ID << ", Title: " << book.Title << ", Author: " << book.Author << endl;
+    for (int i = 0; i < bookCount; ++i) {
+        cout << " ID: " << catalog[i].ID << ", Title: " << catalog[i].Title << ", Author: " << catalog[i].Author << endl;
     }
 }
 
 int main() {
-    // Menambahkan beberapa buku ke katalog
-    addBook({3, "The Great Gatsby", "F. Scott Fitzgerald"});
-    addBook({1, "1984", "George Orwell"});
-    addBook({5, "Pride and Prejudice", "Jane Austen"});
-    addBook({2, "To Kill a Mockingbird", "Harper Lee"});
-    addBook({4, "Moby Dick", "Herman Melville"});
-    addBook({6, "Atomic Habits", "James Clear"});
-
+    addBook({1, "To Kill a Mockingbird", "Harper Lee"});
+    addBook({4, "1984", "George Orwell"});
+    addBook({2, "The Great Gatsby", "F. Scott Fitzgerald"});
+    addBook({7, "Pride and Prejudice", "Jane Austen"});
+    addBook({3, "The Catcher in the Rye", "J.D. Salinger"});
+    addBook({6, "War and Peace", "Leo Tolstoy"});
+    addBook({5, "Harry Potter dan Batu Bertuah", "J.K. Rowling"});
+    
     // Mengurutkan katalog menggunakan Bubble Sort Iteratif
     bubbleSortIterative();
 
@@ -170,11 +174,10 @@ int main() {
     addBook({0, "The Catcher in the Rye", "J.D. Salinger"});
 
     // Mengurutkan katalog menggunakan Bubble Sort Rekursif
-    bubbleSortRecursive(catalog.size());
+    bubbleSortRecursive(bookCount);
 
     // Menampilkan katalog setelah pengurutan rekursif
     displayCatalog();
 
     return 0;
 }
- 
