@@ -136,6 +136,7 @@ int main() {
     addBook({5, "Pride and Prejudice", "Jane Austen"});
     addBook({2, "To Kill a Mockingbird", "Harper Lee"});
     addBook({4, "Moby Dick", "Herman Melville"});
+    addBook({6, "Atomic Habits", "James Clear"});
 
     // Mengurutkan katalog menggunakan Bubble Sort Iteratif
     bubbleSortIterative();
