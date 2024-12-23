@@ -38,21 +38,6 @@ void bubbleSortIterative() {
     }
 }
 
-// Fungsi Bubble Sort Rekursif untuk mengurutkan katalog berdasarkan ID
-void bubbleSortRecursive(int n) {
-    if (n == 1) {
-        return;
-    }
-    for (int j = 0; j < n - 1; ++j) {
-        if (catalog[j].ID > catalog[j + 1].ID) {
-            // Menukar elemen secara manual
-            Book temp = catalog[j];
-            catalog[j] = catalog[j + 1];
-            catalog[j + 1] = temp;
-        }
-    }
-    bubbleSortRecursive(n - 1);
-}
 
 // Fungsi Linear Search Iteratif untuk mencari buku berdasarkan ID
 int linearSearchIterative(int targetID) {
@@ -64,31 +49,6 @@ int linearSearchIterative(int targetID) {
     return -1;
 }
 
-// Fungsi Linear Search Rekursif untuk mencari buku berdasarkan ID
-int linearSearchRecursive(int targetID, int index) {
-    if (index >= bookCount) {
-        return -1;
-    }
-    if (catalog[index].ID == targetID) {
-        return index;
-    }
-    return linearSearchRecursive(targetID, index + 1);
-}
-
-// Fungsi rekursif Binary Search untuk mencari buku berdasarkan ID
-int binarySearchRecursive(int targetID, int low, int high) {
-    if (high < low) {
-        return -1;
-    }
-    int mid = low + (high - low) / 2;
-    if (catalog[mid].ID == targetID) {
-        return mid;
-    } else if (catalog[mid].ID > targetID) {
-        return binarySearchRecursive(targetID, low, mid - 1);
-    } else {
-        return binarySearchRecursive(targetID, mid + 1, high);
-    }
-}
 
 // Fungsi iteratif Binary Search untuk mencari buku berdasarkan ID
 int binarySearchIterative(int targetID) {
@@ -117,7 +77,7 @@ bool removeBook(int targetID) {
     for (int i = index; i < bookCount - 1; ++i) {
         catalog[i] = catalog[i + 1];
     }
-    bookCount--; // Mengurangi jumlah buku
+    bookCount--;
     return true;
 }
 
@@ -174,7 +134,7 @@ int main() {
     addBook({0, "The Catcher in the Rye", "J.D. Salinger"});
 
     // Mengurutkan katalog menggunakan Bubble Sort Rekursif
-    bubbleSortRecursive(bookCount);
+    bubbleSortIterative();
 
     // Menampilkan katalog setelah pengurutan rekursif
     displayCatalog();
